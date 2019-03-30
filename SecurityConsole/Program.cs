@@ -15,24 +15,57 @@ namespace SecurityConsole
         {
             WriteLine("---- Application Started -----");
 
-
-            CreateRole();
+            AppUser newUser = CreateUser("anyone6");
+            AppRole newRole = CreateRole("role6");
+            AddUserToRole(newUser, newRole);
 
             WriteLine("---- Application Finished -----");
             ReadKey();
         }
 
-        public static void CreateRole()
+
+        public static void AddUserToRole(AppUser appUser, AppRole appRole)
         {
             try
             {
-                AppRole appRole = new AppRole("Role1");
-                SecRoleManager.CreateRole(appRole);
-                WriteLine($"{appRole.RoleName} was created.");
+                SecUserRoleManager.AddUserToRole(appUser, appRole);
+                WriteLine($"{appUser.UserName} was added to role {appRole.Name}.");
             }
             catch (Exception ex)
             {
                 WriteLine(ex.Message);
+            }
+            
+        }
+
+        public static void DeleteRole()
+        {
+            try
+            {
+                AppRole appRole = new AppRole("Role2");
+                SecRoleManager.DeleteRole(appRole);
+                WriteLine($"{appRole.Name} was deleted.");
+            }
+            catch (Exception ex)
+            {
+                WriteLine(ex.Message);
+            }
+        }
+
+
+        public static AppRole CreateRole(string roleName)
+        {
+            try
+            {
+                AppRole appRole = new AppRole(roleName);
+                appRole = SecRoleManager.CreateRole(appRole);
+                WriteLine($"{appRole.Name} was created.");
+                return appRole;
+            }
+            catch (Exception ex)
+            {
+                WriteLine(ex.Message);
+                return null;
             }
         }
 
@@ -42,8 +75,8 @@ namespace SecurityConsole
             try
             {
                 AppUser appUser = new AppUser();
-                appUser.Email = "anyone@nowhere.com";
-                appUser.UserName = "AnyOneElse2";
+                appUser.Email = "anyone3@nowhere.com";
+                appUser.UserName = "AnyOneElse3";
                 SecUserManager.DeleteUser(appUser);
                 WriteLine($"{appUser.UserName} was deleted.");
             }
@@ -53,19 +86,21 @@ namespace SecurityConsole
             }
         }
 
-        public static void CreateUser()
+        public static AppUser CreateUser(string userName)
         {
             try
             {
                 AppUser appUser = new AppUser();
-                appUser.Email = "anyone@nowhere.com";
-                appUser.UserName = "AnyOneElse2";
-                SecUserManager.CreateUser(appUser);
+                appUser.Email = userName +"@nowhere.com";
+                appUser.UserName = userName;
+                appUser = SecUserManager.CreateUser(appUser, userName);
                 WriteLine($"{appUser.UserName} was created.");
+                return appUser;
             }
             catch (Exception ex)
             {
                 WriteLine(ex.Message);
+                return null;
             }
         }
 

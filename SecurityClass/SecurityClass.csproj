@@ -59,6 +59,7 @@
     <Compile Include="Class1.cs" />
     <Compile Include="Classes\SecRoleManager.cs" />
     <Compile Include="Classes\SecUserManager.cs" />
+    <Compile Include="Classes\SecUserRoleManager.cs" />
     <Compile Include="DbConnections\SqlExpIdentity.cs" />
     <Compile Include="Migrations\201903292056032_secure1.cs" />
     <Compile Include="Migrations\201903292056032_secure1.Designer.cs">
@@ -83,6 +84,10 @@
     <Compile Include="Migrations\201903292246271_secure6.cs" />
     <Compile Include="Migrations\201903292246271_secure6.Designer.cs">
       <DependentUpon>201903292246271_secure6.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903301649051_userrole1.cs" />
+    <Compile Include="Migrations\201903301649051_userrole1.Designer.cs">
+      <DependentUpon>201903301649051_userrole1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AppRole.cs" />
@@ -116,6 +121,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903292246271_secure6.resx">
       <DependentUpon>201903292246271_secure6.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903301649051_userrole1.resx">
+      <DependentUpon>201903301649051_userrole1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

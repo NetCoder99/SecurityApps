@@ -12,11 +12,19 @@ namespace SecurityClass.Classes
 {
     public class SecUserManager
     {
-        public static void CreateUser(AppUser appUser)
+        public static AppUser GetUser(AppUser appUser)
+        {
+            UserStore<AppUser> userStore = new UserStore<AppUser>(new SqlExpIdentity());
+            using (var userManager = new UserManager<AppUser>(userStore))
+            { return userManager.FindByName(appUser.UserName); }
+        }
+
+        public static AppUser CreateUser(AppUser appUser, string passWord)
         {
             UserStore<AppUser> userStore = new UserStore<AppUser>(new SqlExpIdentity());
             using (var userManager = new UserManager<AppUser>(userStore))
             {
+                appUser.PasswordHash = new PasswordHasher().HashPassword(passWord);
                 IdentityResult r1 = userManager.Create(appUser, "password");
                 if (r1.Errors.Count() > 0)
                 {
@@ -24,6 +32,7 @@ namespace SecurityClass.Classes
                     throw new Exception(e1);
                 }
             }
+            return GetUser(appUser);
         }
 
         public static void DeleteUser(AppUser appUser)

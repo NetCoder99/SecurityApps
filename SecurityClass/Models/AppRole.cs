@@ -9,9 +9,6 @@ namespace SecurityClass.Models
         public AppRole() : base() { } 
         public AppRole(string name) : base(name) { }
 
-        [NotMapped]
-        public string RoleName { get { return base.Name; } } 
-
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int RoleId { get; set; }
 
