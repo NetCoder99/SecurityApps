@@ -24,6 +24,10 @@ namespace SecurityClass.Classes
                     string e1 = r1.Errors.ToList()[0];
                     throw new Exception(e1);
                 }
+                else
+                {
+                    //return userManager.rol
+                }
             }
         }
 

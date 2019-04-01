@@ -58,6 +58,7 @@
     <Compile Include="AppUserManager.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="Classes\SecRoleManager.cs" />
+    <Compile Include="Classes\SecSystemManager.cs" />
     <Compile Include="Classes\SecUserManager.cs" />
     <Compile Include="Classes\SecUserRoleManager.cs" />
     <Compile Include="DbConnections\SqlExpIdentity.cs" />
@@ -89,7 +90,32 @@
     <Compile Include="Migrations\201903301649051_userrole1.Designer.cs">
       <DependentUpon>201903301649051_userrole1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904011521374_appsystems1.cs" />
+    <Compile Include="Migrations\201904011521374_appsystems1.Designer.cs">
+      <DependentUpon>201904011521374_appsystems1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904011557473_appsystems2.cs" />
+    <Compile Include="Migrations\201904011557473_appsystems2.Designer.cs">
+      <DependentUpon>201904011557473_appsystems2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904011609018_appsystems3.cs" />
+    <Compile Include="Migrations\201904011609018_appsystems3.Designer.cs">
+      <DependentUpon>201904011609018_appsystems3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904011614514_approles3.cs" />
+    <Compile Include="Migrations\201904011614514_approles3.Designer.cs">
+      <DependentUpon>201904011614514_approles3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904011625193_approles4.cs" />
+    <Compile Include="Migrations\201904011625193_approles4.Designer.cs">
+      <DependentUpon>201904011625193_approles4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904011741551_approles5.cs" />
+    <Compile Include="Migrations\201904011741551_approles5.Designer.cs">
+      <DependentUpon>201904011741551_approles5.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\AppSystem.cs" />
     <Compile Include="Models\AppRole.cs" />
     <Compile Include="Models\AppUser.cs" />
     <Compile Include="Models\AppUserClaim.cs" />
@@ -124,6 +150,24 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903301649051_userrole1.resx">
       <DependentUpon>201903301649051_userrole1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904011521374_appsystems1.resx">
+      <DependentUpon>201904011521374_appsystems1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904011557473_appsystems2.resx">
+      <DependentUpon>201904011557473_appsystems2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904011609018_appsystems3.resx">
+      <DependentUpon>201904011609018_appsystems3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904011614514_approles3.resx">
+      <DependentUpon>201904011614514_approles3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904011625193_approles4.resx">
+      <DependentUpon>201904011625193_approles4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904011741551_approles5.resx">
+      <DependentUpon>201904011741551_approles5.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -20,28 +20,39 @@ namespace SecurityClass.Classes
                 return roleManager.FindByName(appRole.Name);
             }
         }
-
-        public static AppRole CreateRole(AppRole appRole)
+        public static AppRole GetRoleByName(string roleName)
         {
             RoleStore<AppRole> roleStore = new RoleStore<AppRole>(new SqlExpIdentity());
             using (var roleManager = new RoleManager<AppRole>(roleStore))
             {
-                IdentityResult r1 = roleManager.Create(appRole);
-                if (r1.Errors.Count() > 0)
-                {
-                    string e1 = r1.Errors.ToList()[0];
-                    throw new Exception(e1);
-                }
-                return GetRole(appRole);
+                return roleManager.FindByName(roleName);
             }
         }
 
+
+        //public static AppRole CreateRole(AppRole appRole)
+        //{
+        //    RoleStore<AppRole> roleStore = new RoleStore<AppRole>(new SqlExpIdentity());
+        //    using (var roleManager = new RoleManager<AppRole>(roleStore))
+        //    {
+        //        IdentityResult r1 = roleManager.Create(appRole);
+        //        if (r1.Errors.Count() > 0)
+        //        {
+        //            string e1 = r1.Errors.ToList()[0];
+        //            throw new Exception(e1);
+        //        }
+        //        return GetRole(appRole);
+        //    }
+        //}
+
         public static void DeleteRole(AppRole appRole)
         {
+
             RoleStore<AppRole> roleStore = new RoleStore<AppRole>(new SqlExpIdentity());
             using (var roleManager = new RoleManager<AppRole>(roleStore))
             {
                 AppRole delRole = roleManager.FindByName(appRole.Name);
+                DeleteRoleUsers(delRole);
                 IdentityResult r1 = roleManager.Delete(delRole);
                 if (r1.Errors.Count() > 0)
                 {
@@ -51,6 +62,21 @@ namespace SecurityClass.Classes
             }
         }
 
+        public static void DeleteRoleUsers(AppRole appRole)
+        {
+            RoleStore<AppRole> roleStore = new RoleStore<AppRole>(new SqlExpIdentity());
+            using (var roleManager = new RoleManager<AppRole>(roleStore))
+            {
+                try
+                {
+                    appRole = roleManager.FindById(appRole.Id);
+                    appRole.Users.Clear();
+                    roleStore.Context.SaveChanges();
+                }
+                catch(Exception ex)
+                { throw ex; }
+            }
+        }
 
     }
 }

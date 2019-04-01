@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SecurityClass.Models
@@ -14,5 +15,9 @@ namespace SecurityClass.Models
 
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime CreateDate { get; set; }
+
+        [Required]
+        public virtual AppSystem AppSystem { get; set; }
+
     }
 }

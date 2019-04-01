@@ -17,8 +17,7 @@ namespace SecurityClass.DbConnections
 
         public DbSet<AppUser> appUsers { get; set; }
         public DbSet<AppRole> appRoles { get; set; }
-
-
+        public DbSet<AppSystem> appSystems { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 using static System.Console;
 using SecurityClass.Classes;
 using SecurityClass.Models;
+using static SecurityConsole.ExceptionProcs;
+using System.Data.Entity.Core;
+using System.Data.Entity.Validation;
 
 namespace SecurityConsole
 {
@@ -15,14 +18,47 @@ namespace SecurityConsole
         {
             WriteLine("---- Application Started -----");
 
-            AppUser newUser = CreateUser("anyone6");
-            AppRole newRole = CreateRole("role6");
+
+            AppSystem appSystem1 = SecSystemManager.GetAppByName("AdWorks");
+            AppUser newUser = CreateUser("anyone8");
+            //AppRole newRole = CreateRole(appSystem1, "role7");
+            AppRole newRole = SecRoleManager.GetRoleByName("role7");
             AddUserToRole(newUser, newRole);
+
+            //SecRoleManager.DeleteRoleUsers(newRole);
+
+
+            //AppRole tmpRole = SecRoleManager.GetRoleByName("Role1");
+            //SecRoleManager.DeleteRole(tmpRole);
+
+
+            //AppSystem appSystem = CreateSystem("AdWorks", "Adventure Works CRUD application.");
+            //AppUser newUser = CreateUser("anyone6");
+            //AppRole newRole = CreateRole("role6");
+            //AddUserToRole(newUser, newRole);
 
             WriteLine("---- Application Finished -----");
             ReadKey();
         }
 
+        public static AppSystem CreateSystem(string sysName, string sysDesc)
+        {
+            try
+            {
+                AppSystem appSystem = new AppSystem();
+                appSystem.Name = sysName;
+                appSystem.Desc = sysDesc;
+                appSystem = SecSystemManager.CreateApp(appSystem);
+                WriteLine($"{appSystem.Name} was created.");
+                return appSystem;
+            }
+            catch (Exception ex)
+            {
+                WriteLine(ex.Message);
+                return null;
+            }
+
+        }
 
         public static void AddUserToRole(AppUser appUser, AppRole appRole)
         {
@@ -53,18 +89,24 @@ namespace SecurityConsole
         }
 
 
-        public static AppRole CreateRole(string roleName)
+        public static AppRole CreateRole(AppSystem appSystem, string roleName)
         {
             try
             {
                 AppRole appRole = new AppRole(roleName);
-                appRole = SecRoleManager.CreateRole(appRole);
+                SecSystemManager.AddRole(appSystem.Name, appRole);
                 WriteLine($"{appRole.Name} was created.");
                 return appRole;
             }
+            catch (DbEntityValidationException ex)
+            {
+                WriteLine(GetExceptionMessage(ex));
+                return null;
+            }
+
             catch (Exception ex)
             {
-                WriteLine(ex.Message);
+                WriteLine(GetExceptionMessage(ex));
                 return null;
             }
         }
@@ -104,6 +146,9 @@ namespace SecurityConsole
             }
         }
 
+
+
+        
 
     }
 }
