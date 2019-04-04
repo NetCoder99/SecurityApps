@@ -9,10 +9,21 @@ namespace SecurityWeb
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+                        "~/Scripts/jquery-{version}.js",
+                        "~/Scripts/jquery.unobtrusive-ajax.min.js",
+                        "~/Scripts/jquery-ui-1.12.1.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-                        "~/Scripts/jquery.validate*"));
+                        "~/Scripts/jquery.validate*",
+                        "~/Scripts/jquery.validate.unobtrusive.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/datatables").Include(
+                        "~/Scripts/DataTables/jquery.dataTables.min.js"
+            ));
+            bundles.Add(new ScriptBundle("~/bundles/application").Include(
+                        "~/Scripts/Application/DisableInputs.js",
+                        "~/Scripts/Application/ShowMessage.js"
+            ));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at https://modernizr.com to pick only the tests you need.
@@ -20,10 +31,14 @@ namespace SecurityWeb
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js"));
+                      "~/Scripts/bootstrap.js",
+                      "~/Scripts/bootbox.min.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      "~/Content/themes/base/jquery-ui.min.css",
+                      "~/Content/DataTables/css/dataTables.bootstrap.min.css",
+                      "~/Content/DataTables/css/jquery.dataTables.min.css",
                       "~/Content/site.css"));
         }
     }

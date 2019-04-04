@@ -43,10 +43,14 @@
     <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.2\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -56,9 +60,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppUserManager.cs" />
+    <Compile Include="Builders\AppBuilder.cs" />
+    <Compile Include="Builders\AppSystemBuilder.cs" />
+    <Compile Include="Builders\IAppBuilder.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="Classes\SecRoleManager.cs" />
-    <Compile Include="Classes\SecSystemManager.cs" />
+    <Compile Include="Classes\SecAppManager.cs" />
     <Compile Include="Classes\SecUserManager.cs" />
     <Compile Include="Classes\SecUserRoleManager.cs" />
     <Compile Include="DbConnections\SqlExpIdentity.cs" />
@@ -114,6 +121,38 @@
     <Compile Include="Migrations\201904011741551_approles5.Designer.cs">
       <DependentUpon>201904011741551_approles5.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904042115451_appmanage1.cs" />
+    <Compile Include="Migrations\201904042115451_appmanage1.Designer.cs">
+      <DependentUpon>201904042115451_appmanage1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904042118369_appmanage2.cs" />
+    <Compile Include="Migrations\201904042118369_appmanage2.Designer.cs">
+      <DependentUpon>201904042118369_appmanage2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904042203261_appmanage3.cs" />
+    <Compile Include="Migrations\201904042203261_appmanage3.Designer.cs">
+      <DependentUpon>201904042203261_appmanage3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904042209316_appmanage4.cs" />
+    <Compile Include="Migrations\201904042209316_appmanage4.Designer.cs">
+      <DependentUpon>201904042209316_appmanage4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904042210292_appmanage5.cs" />
+    <Compile Include="Migrations\201904042210292_appmanage5.Designer.cs">
+      <DependentUpon>201904042210292_appmanage5.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904042232096_appmanage6.cs" />
+    <Compile Include="Migrations\201904042232096_appmanage6.Designer.cs">
+      <DependentUpon>201904042232096_appmanage6.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904042233490_appmanage7.cs" />
+    <Compile Include="Migrations\201904042233490_appmanage7.Designer.cs">
+      <DependentUpon>201904042233490_appmanage7.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904042243195_appmanage8.cs" />
+    <Compile Include="Migrations\201904042243195_appmanage8.Designer.cs">
+      <DependentUpon>201904042243195_appmanage8.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AppSystem.cs" />
     <Compile Include="Models\AppRole.cs" />
@@ -168,6 +207,30 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904011741551_approles5.resx">
       <DependentUpon>201904011741551_approles5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904042115451_appmanage1.resx">
+      <DependentUpon>201904042115451_appmanage1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904042118369_appmanage2.resx">
+      <DependentUpon>201904042118369_appmanage2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904042203261_appmanage3.resx">
+      <DependentUpon>201904042203261_appmanage3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904042209316_appmanage4.resx">
+      <DependentUpon>201904042209316_appmanage4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904042210292_appmanage5.resx">
+      <DependentUpon>201904042210292_appmanage5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904042232096_appmanage6.resx">
+      <DependentUpon>201904042232096_appmanage6.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904042233490_appmanage7.resx">
+      <DependentUpon>201904042233490_appmanage7.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904042243195_appmanage8.resx">
+      <DependentUpon>201904042243195_appmanage8.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

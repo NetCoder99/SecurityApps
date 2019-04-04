@@ -19,7 +19,7 @@ namespace SecurityConsole
             WriteLine("---- Application Started -----");
 
 
-            AppSystem appSystem1 = SecSystemManager.GetAppByName("AdWorks");
+            AppSystem appSystem1 = SecAppManager.GetAppByName("AdWorks");
             AppUser newUser = CreateUser("anyone8");
             //AppRole newRole = CreateRole(appSystem1, "role7");
             AppRole newRole = SecRoleManager.GetRoleByName("role7");
@@ -48,7 +48,7 @@ namespace SecurityConsole
                 AppSystem appSystem = new AppSystem();
                 appSystem.Name = sysName;
                 appSystem.Desc = sysDesc;
-                appSystem = SecSystemManager.CreateApp(appSystem);
+                appSystem = SecAppManager.CreateApp(appSystem);
                 WriteLine($"{appSystem.Name} was created.");
                 return appSystem;
             }
@@ -94,7 +94,7 @@ namespace SecurityConsole
             try
             {
                 AppRole appRole = new AppRole(roleName);
-                SecSystemManager.AddRole(appSystem.Name, appRole);
+                SecAppManager.AddRole(appSystem.Name, appRole);
                 WriteLine($"{appRole.Name} was created.");
                 return appRole;
             }

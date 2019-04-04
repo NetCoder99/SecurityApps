@@ -1,0 +1,151 @@
+﻿@model IEnumerable<SecurityClass.Models.AppSystem>
+
+@{
+    ViewBag.Title = "AppsIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <div class="col-xs-2"></div>
+    <div class="col-xs-8">
+
+        <div class="logo mb-3">
+            <div class="col-md-12 text-center">
+                <h2>Manage Applications.</h2>
+            </div>
+        </div>
+    </div>
+
+    <div style="clear:both;">
+        @Html.ActionLink("Create New", "EditApplication", "Applications")
+        <div id="message_div" style="display:inline;float:right;display:none;">
+            <img src="~/Content/Icons/success.png" style="height:18px;" />
+            <span id="message"></span>
+        </div>
+    </div>
+
+    <table id="tbl_applications" class="table table-bordered table-condensed table-striped">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.AppId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Desc)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CreateDate)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AppId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Desc)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreateDate)
+                    </td>
+                    <td>
+                        <button id="btn_edit"
+                                type="button"
+                                class="btn btn-link btn-nopad"
+                                value="@item.Id"
+                                onclick="location.href='@Url.Action("EditApplication", "Applications", new {appGuid = @item.Id })'; return false;">
+                            Edit
+                        </button>
+                        |
+                        <button id="btn_delete"
+                                type="button"
+                                class="btn btn-link btn-nopad"
+                                value="@item.Id"
+                                onclick="javascript:return ConfirmDelete(value)">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+    <div class="col-xs-2"></div>
+    <br style="clear:both;" />
+
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            console.log("AppsIndex is ready to rock and roll....");
+            $("#tbl_applications").dataTable({ searching: false, info: false, lengthChange: false, });
+        });
+
+        function ConfirmDelete(appGuid) {
+            DisableInputs(true);
+            GetAppCounts(appGuid);
+            return false;
+        };
+
+        function GetAppCounts(appGuid) {
+            console.log("GetAppCounts: " + appGuid);
+            $.ajax({
+                type: 'GET',
+                url: '@(Url.Action("GetAppCounts", "Applications"))',
+                data: {
+                    'appGuid': appGuid
+                },
+                dataType: "json",
+                error: function () {
+                    console.log("error");
+                },
+                success: function (data) {
+                    console.log("success");
+                    console.log(JSON.stringify(data));
+                    ShowConfirmDialog(data);
+                },
+                complete: function () {
+                    console.log("complete");
+                }
+            });
+        }
+
+        function ShowConfirmDialog(data) {
+            var msgText = "<span>Delete this application: <span class='bold'>" + data.applicationName + " ?</span></span>";
+            msgText += "<div><span class='bold'>Note: This will also delete " + data.rolesCount + " and " + data.usersCount + " users.</span></div>";
+            bootbox.confirm({
+                title: "Confirm Applicaton Delete.",
+                message: msgText,
+                buttons: {
+                    confirm: {
+                        label: 'Yes'
+                    },
+                    cancel: {
+                        label: 'No'
+                    }
+                },
+                callback: function (result) {
+                    if (result) {
+                        console.log("process delete");
+                    }
+                    else {
+                        console.log("cancel delete");
+                    }
+                    DisableInputs(false);
+                }
+            });
+            return false;
+        };
+
+
+    </script>
+}

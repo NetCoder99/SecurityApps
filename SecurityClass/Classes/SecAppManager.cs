@@ -1,4 +1,5 @@
-﻿using SecurityClass.DbConnections;
+﻿using SecurityClass.Builders;
+using SecurityClass.DbConnections;
 using SecurityClass.Models;
 using System;
 using System.Collections.Generic;
@@ -8,14 +9,31 @@ using System.Threading.Tasks;
 
 namespace SecurityClass.Classes
 {
-    public class SecSystemManager
+    public class SecAppManager
     {
+        public static List<AppSystem> GetAppsAll()
+        {
+            using (var dbContext = new SqlExpIdentity())
+            {
+                try
+                { return dbContext.appSystems.ToList(); }
+                catch (Exception ex)
+                { throw ex; }
+            }
+        }
+
+
         public static AppSystem GetAppByGuid(string appId)
         {
             using (var dbContext = new SqlExpIdentity())
             {
                 try
-                { return dbContext.appSystems.Where(w=>w.Id == appId).FirstOrDefault(); }
+                {
+                    AppSystem appSystem = dbContext.appSystems.Where(w=>w.Id == appId).FirstOrDefault();
+                    if (appSystem != null)
+                    { appSystem.AppRoles.ToList(); }
+                    return appSystem;
+                }
                 catch (Exception ex)
                 { throw ex; }
             }
@@ -49,6 +67,8 @@ namespace SecurityClass.Classes
             {
                 try
                 {
+                    appSystem.CreateDate = DateTime.Now;
+                    appSystem.UpdateDate = DateTime.Now;
                     dbContext.appSystems.Add(appSystem);
                     dbContext.SaveChanges();
                 }
@@ -59,6 +79,37 @@ namespace SecurityClass.Classes
             }
             return appSystem;
         }
+
+        public static AppSystem Update(AppSystem appSystem)
+        {
+            using (var dbContext = new SqlExpIdentity())
+            {
+                try
+                {
+                    AppSystem tmpSystem = dbContext.appSystems.Where(w => w.Id == appSystem.Id).FirstOrDefault();
+                    if (tmpSystem == null)
+                    {
+                        tmpSystem = new AppBuilder().AppName(appSystem.Name).AppDesc(appSystem.Desc).Build();
+                        tmpSystem = CreateApp(tmpSystem);
+                    }
+                    else
+                    {
+                        tmpSystem.Name = appSystem.Name != appSystem.Name ? tmpSystem.Name : appSystem.Name;
+                        tmpSystem.Desc = appSystem.Desc != appSystem.Desc ? tmpSystem.Desc : appSystem.Desc;
+                        tmpSystem.UpdateDate = DateTime.Now;
+                        int updCount = dbContext.SaveChanges();
+                    }
+
+                    return tmpSystem;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
+
+
 
         public static AppRole AddRole(string appName, AppRole appRole)
         {

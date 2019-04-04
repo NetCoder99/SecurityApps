@@ -1,0 +1,88 @@
+﻿@model SecurityClass.Models.AppSystem
+
+@{
+    ViewBag.Title = "EditApplication";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="col-xs-2"></div>
+    <div class="col-xs-8">
+
+        <div class="form-horizontal">
+            <div class="logo mb-3">
+                <div class="col-md-12 text-center">
+                    <h2>Edit or create an application.</h2>
+                </div>
+            </div>
+            <div>
+                @Html.ActionLink("Back to List", "AppsIndexMain")
+            </div>
+            <hr />
+            @Html.HiddenFor(model => model.Id)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.AppId, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.AppId, new { htmlAttributes = new { @class = "form-control", @disabled = "@disabled" } })
+                    @Html.ValidationMessageFor(model => model.AppId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Desc, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Desc, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Desc, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.CreateDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.CreateDate, new { htmlAttributes = new { @class = "form-control", @disabled = "@disabled" } })
+                    @Html.ValidationMessageFor(model => model.CreateDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.UpdateDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.UpdateDate, new { htmlAttributes = new { @class = "form-control", @disabled = "@disabled" } })
+                    @Html.ValidationMessageFor(model => model.UpdateDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-default btn-primary" />
+                </div>
+            </div>
+        </div>
+        <br style="clear:both;" />
+        <hr />
+    </div>
+
+    <div class="col-xs-2"></div>
+    <br style="clear:both;" />
+}
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            console.log("EditApplication is ready to rock and roll....");
+        });
+
+    </script>
+}
+

@@ -31,6 +31,17 @@ namespace SecurityClass.Classes
             }
         }
 
+        public static List<AppUser> GetUsersInRole(AppRole appRole)
+        {
+            UserStore<AppUser> userStore = new UserStore<AppUser>(new SqlExpIdentity());
+            using (var userManager = new UserManager<AppUser>(userStore))
+            {
+                List<AppUser> appUsers = (from user in userManager.Users
+                                          where user.Roles.Any(r => r.RoleId == appRole.Id)
+                                          select user).ToList();
+                return appUsers;
+            }
+        }
 
     }
 }

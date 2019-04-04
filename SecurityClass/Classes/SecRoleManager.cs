@@ -29,22 +29,6 @@ namespace SecurityClass.Classes
             }
         }
 
-
-        //public static AppRole CreateRole(AppRole appRole)
-        //{
-        //    RoleStore<AppRole> roleStore = new RoleStore<AppRole>(new SqlExpIdentity());
-        //    using (var roleManager = new RoleManager<AppRole>(roleStore))
-        //    {
-        //        IdentityResult r1 = roleManager.Create(appRole);
-        //        if (r1.Errors.Count() > 0)
-        //        {
-        //            string e1 = r1.Errors.ToList()[0];
-        //            throw new Exception(e1);
-        //        }
-        //        return GetRole(appRole);
-        //    }
-        //}
-
         public static void DeleteRole(AppRole appRole)
         {
 
@@ -77,6 +61,8 @@ namespace SecurityClass.Classes
                 { throw ex; }
             }
         }
+
+
 
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SecurityClass.Classes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -29,8 +30,10 @@ namespace SecurityClass.Models
         [StringLength(250)]
         public string Desc { get; set; }
 
-        [Required, DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        [Required]
         public DateTime CreateDate { get; set; }
+
+        public DateTime UpdateDate { get; set; }
 
         public virtual ICollection<AppRole> AppRoles { get; set; }
 
@@ -38,6 +41,14 @@ namespace SecurityClass.Models
         {
             this.Id = Guid.NewGuid().ToString();
         }
+
+        //public void Update()
+        //{
+        //    AppSystem tmpSystem = SecAppManager.Update(this);
+        //    //this.AppId = tmpSystem.AppId;
+        //    //this.CreateDate = tmpSystem.CreateDate;
+        //    //this.UpdateDate = tmpSystem.UpdateDate;
+        //}
 
     }
 }
