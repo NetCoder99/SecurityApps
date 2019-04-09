@@ -1,13 +1,24 @@
-﻿@model SecurityClass.Models.AppSystem
+﻿@model SecurityWeb.Models.ViewAppSystem
 
 @{
     ViewBag.Title = "EditApplication";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@using (Html.BeginForm())
+
+@using (Ajax.BeginForm("EditApplication", "Applications", null,
+    new AjaxOptions
+    {
+        HttpMethod = "POST",
+        OnBegin = "OnBegin",
+        OnSuccess = "OnSuccess(data, status, xhr)",
+        OnFailure = "OnFailure(xhr, status)"
+    },
+    new { id = "myform" }))
 {
     @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.Id)
+
     <div class="col-xs-2"></div>
     <div class="col-xs-8">
 
@@ -17,56 +28,68 @@
                     <h2>Edit or create an application.</h2>
                 </div>
             </div>
-            <div>
+
+            <div style="clear:both;">
                 @Html.ActionLink("Back to List", "AppsIndexMain")
+                <div id="div_message" class="lcl_hidden">@Html.Partial("~/Views/Shared/Message1.cshtml")</div>
             </div>
-            <hr />
-            @Html.HiddenFor(model => model.Id)
 
+            <div class="form-horizontal">
+                <hr class="margin_bottom_small" />
+                <div class="row margin_bottom_small">
+                    <div class="col-xs-3 margin_bottom_small float_left">
+                        @Html.LabelFor(model => model.AppId, htmlAttributes: new { @class = "control-label  float_left" }):
+                        @Html.EditorFor(model => model.AppId, new { htmlAttributes = new { @id = "AppId", @class = "form-control float_left", @disabled = "disabled" } })
+                    </div>
+                    <div class="col-xs-4 margin_bottom_small">
+                        @Html.LabelFor(model => model.CreateDate, htmlAttributes: new { @class = "control-label" }):
+                        @Html.EditorFor(model => model.CreateDate, new { htmlAttributes = new { @id = "CreateDate", @class = "form-control", @disabled = "disabled" } })
+                    </div>
+                    <div class="col-xs-5">
+                        @Html.LabelFor(model => model.UpdateDate, htmlAttributes: new { @class = "control-label" }):
+                        @Html.EditorFor(model => model.UpdateDate, new { htmlAttributes = new { @id = "RoleDescription", @class = "form-control ", @disabled = "disabled" } })
+                    </div>
+                </div>
+                <hr class="margin_top_none margin_bottom_none" />
+            </div>
+
+            <h4>Change or enter the application details.</h4>
             <div class="form-group">
-                @Html.LabelFor(model => model.AppId, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.AppId, new { htmlAttributes = new { @class = "form-control", @disabled = "@disabled" } })
-                    @Html.ValidationMessageFor(model => model.AppId, "", new { @class = "text-danger" })
+                <div class="col-md-3">
+                    @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2 text-left" })
+                </div>
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control small_inp_box" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger static_error" })
                 </div>
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                <div class="col-md-3">
+                    @Html.LabelFor(model => model.Desc, htmlAttributes: new { @class = "control-label col-md-2 text-left" })
+                </div>
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.Desc, new { @rows = 10, @cols = 60, htmlAttributes = new { @class = "form-control small_inp_box" } })
+                    @Html.ValidationMessageFor(model => model.Desc, "", new { @class = "text-danger static_error" })
                 </div>
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Desc, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Desc, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Desc, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.CreateDate, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.CreateDate, new { htmlAttributes = new { @class = "form-control", @disabled = "@disabled" } })
-                    @Html.ValidationMessageFor(model => model.CreateDate, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.UpdateDate, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.UpdateDate, new { htmlAttributes = new { @class = "form-control", @disabled = "@disabled" } })
-                    @Html.ValidationMessageFor(model => model.UpdateDate, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Save" class="btn btn-default btn-primary" />
-                </div>
+                @if (Model.Id != null)
+                {
+                    <div class="col-md-offset-2 float_left">
+                        <input type="submit" name="Save" value="Save Changes" class="btn btn-default btn-primary" />
+                    </div>
+                    <div class="col-md-offset-2 float_left">
+                        <input type="submit" name="Delete" value="Delete" class="btn btn-primary" />
+                    </div>
+                }
+                else
+                {
+                    <div class="col-md-offset-2 float_left">
+                        <input type="submit" name="Create" value="Create Application" class="btn btn-default btn-primary" />
+                    </div>
+                }
             </div>
         </div>
         <br style="clear:both;" />
@@ -81,8 +104,57 @@
     <script>
         $(document).ready(function () {
             console.log("EditApplication is ready to rock and roll....");
+            $(".small_inp_box:first").focus();
+            $(".small_inp_box").addClass("lgreen");
+
         });
 
+        function OnBegin() {
+            console.log("OnBegin:");
+            DisableInputs(true);
+        }
+
+        function OnSuccess(data, status, xhr) {
+            console.log("OnSuccess:");
+            DisableInputs(false);
+
+            var jsonMessage = xhr.getResponseHeader("jsonMessage")
+            if (jsonMessage != null) {
+                var jsonData = JSON.parse(jsonMessage);
+                console.log("jsonData:param1:" + jsonData.param1);
+                return;
+            }
+
+            //ShowMessage($("#div_message"), "Processing complete.");
+        }
+
+        function OnFailure(xhr, status) {
+            console.log("OnFailure");
+            DisableInputs(false);
+        }
+
+
+        $(".small_inp_box").focusout(function () {
+            console.log("checking for invalids");
+            var err_msg = "";
+            var fv = $('#myform').validate();
+            if (!$(this).valid()) {
+                $(this).removeClass("lgreen");
+                $(this).addClass("lred");
+                console.log("invalid!");
+                var currentElement = this;
+                setTimeout(function () {
+                    let error = fv.errorList.filter(function (e) { return e.element == currentElement; })[0];
+                    err_msg = error.message;
+                    console.log(error.message);
+                });
+            }
+            else {
+                $(this).addClass("lgreen");
+                $(this).removeClass("lred");
+                console.log("valid!");
+            }
+        });
     </script>
 }
 

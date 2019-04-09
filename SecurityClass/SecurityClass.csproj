@@ -61,14 +61,12 @@
   <ItemGroup>
     <Compile Include="AppUserManager.cs" />
     <Compile Include="Builders\AppBuilder.cs" />
-    <Compile Include="Builders\AppSystemBuilder.cs" />
-    <Compile Include="Builders\IAppBuilder.cs" />
-    <Compile Include="Class1.cs" />
     <Compile Include="Classes\SecRoleManager.cs" />
     <Compile Include="Classes\SecAppManager.cs" />
     <Compile Include="Classes\SecUserManager.cs" />
     <Compile Include="Classes\SecUserRoleManager.cs" />
     <Compile Include="DbConnections\SqlExpIdentity.cs" />
+    <Compile Include="Interfaces\IAppSystem.cs" />
     <Compile Include="Migrations\201903292056032_secure1.cs" />
     <Compile Include="Migrations\201903292056032_secure1.Designer.cs">
       <DependentUpon>201903292056032_secure1.cs</DependentUpon>
@@ -153,6 +151,10 @@
     <Compile Include="Migrations\201904042243195_appmanage8.Designer.cs">
       <DependentUpon>201904042243195_appmanage8.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904091918428_appsys1.cs" />
+    <Compile Include="Migrations\201904091918428_appsys1.Designer.cs">
+      <DependentUpon>201904091918428_appsys1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AppSystem.cs" />
     <Compile Include="Models\AppRole.cs" />
@@ -232,6 +234,10 @@
     <EmbeddedResource Include="Migrations\201904042243195_appmanage8.resx">
       <DependentUpon>201904042243195_appmanage8.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904091918428_appsys1.resx">
+      <DependentUpon>201904091918428_appsys1.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

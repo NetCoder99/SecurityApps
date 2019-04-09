@@ -43,6 +43,10 @@ namespace SecurityClass.Builders
                     }
                 }
             }
+
+            if (string.IsNullOrEmpty(appSystem.Id))
+            { appSystem.Id = Guid.NewGuid().ToString(); }
+
             return appSystem;
         }
 

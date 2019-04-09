@@ -18,8 +18,8 @@
 
 /* Set width on the form input elements since they're 100% wide by default */
 input,
-select,
-textarea {
+select
+{
     max-width: 280px;
 }
 
@@ -45,6 +45,10 @@ textarea {
 
 .lgreen {
     background-color: #cbfdcb;
+}
+
+.hght_18px {
+    height: 18px;
 }
 
 .hght_1em {
@@ -123,4 +127,8 @@ table.dataTable thead td {
 
 .btn-nopad {
     padding: 0px;
+}
+
+textarea.form-control {
+    color: #cbfdcb;
 }

@@ -61,7 +61,7 @@ namespace SecurityClass.Classes
             }
         }
 
-        public static AppSystem CreateApp(AppSystem appSystem)
+        public static AppSystem Create(AppSystem appSystem)
         {
             using (var dbContext = new SqlExpIdentity())
             {
@@ -90,7 +90,7 @@ namespace SecurityClass.Classes
                     if (tmpSystem == null)
                     {
                         tmpSystem = new AppBuilder().AppName(appSystem.Name).AppDesc(appSystem.Desc).Build();
-                        tmpSystem = CreateApp(tmpSystem);
+                        tmpSystem = Create(tmpSystem);
                     }
                     else
                     {
@@ -109,6 +109,26 @@ namespace SecurityClass.Classes
             }
         }
 
+        public static AppSystem Delete(AppSystem appSystem)
+        {
+            using (var dbContext = new SqlExpIdentity())
+            {
+                try
+                {
+                    AppSystem tmpSystem = dbContext.appSystems.Where(w => w.Id == appSystem.Id).FirstOrDefault();
+                    if (tmpSystem != null)
+                    {
+                        dbContext.appSystems.Remove(tmpSystem);
+                        dbContext.SaveChanges();
+                    }
+                    return tmpSystem;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
 
 
         public static AppRole AddRole(string appName, AppRole appRole)

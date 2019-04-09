@@ -1,4 +1,5 @@
 ﻿using SecurityClass.Classes;
+using SecurityClass.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -9,46 +10,39 @@ using System.Threading.Tasks;
 
 namespace SecurityClass.Models
 {
-    public class AppSystem
+    public class AppSystem : IAppSystem
     {
 
         [Key]
         [Required]
         [StringLength(128)]
-        public string Id { get; set; }
+        public override string Id { get; set; }
 
         [Required]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int AppId { get; set; }
+        public override int AppId { get; set; }
 
         [Required]
         [Index(IsUnique = true)]
         [StringLength(50)]
-        public string Name { get; set; }
+        public override string Name { get; set; }
 
         [Required]
         [StringLength(250)]
-        public string Desc { get; set; }
+        public override string Desc { get; set; }
 
         [Required]
-        public DateTime CreateDate { get; set; }
+        public override DateTime CreateDate { get; set; }
 
-        public DateTime UpdateDate { get; set; }
+        public override DateTime UpdateDate { get; set; }
 
-        public virtual ICollection<AppRole> AppRoles { get; set; }
+        public override ICollection<AppRole> AppRoles { get; set; }
 
-        public AppSystem()
-        {
-            this.Id = Guid.NewGuid().ToString();
-        }
-
-        //public void Update()
+        //public AppSystem()
         //{
-        //    AppSystem tmpSystem = SecAppManager.Update(this);
-        //    //this.AppId = tmpSystem.AppId;
-        //    //this.CreateDate = tmpSystem.CreateDate;
-        //    //this.UpdateDate = tmpSystem.UpdateDate;
+        //    //this.Id = Guid.NewGuid().ToString();
         //}
+
 
     }
 }

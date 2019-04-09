@@ -1,27 +1,26 @@
-﻿@model IEnumerable<SecurityClass.Models.AppSystem>
+﻿@model IEnumerable<SecurityWeb.Models.ViewAppSystem>
 
 @{
     ViewBag.Title = "AppsIndex";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-    <div class="col-xs-2"></div>
-    <div class="col-xs-8">
+<div class="col-xs-2"></div>
+<div class="col-xs-8">
 
-        <div class="logo mb-3">
-            <div class="col-md-12 text-center">
-                <h2>Manage Applications.</h2>
-            </div>
+    <div class="logo mb-3">
+        <div class="col-md-12 text-center">
+            <h2>Manage Applications.</h2>
         </div>
     </div>
+</div>
 
-    <div style="clear:both;">
-        @Html.ActionLink("Create New", "EditApplication", "Applications")
-        <div id="message_div" style="display:inline;float:right;display:none;">
-            <img src="~/Content/Icons/success.png" style="height:18px;" />
-            <span id="message"></span>
-        </div>
-    </div>
+<div style="clear:both;">
+    @Html.ActionLink("Create New", "EditApplication", "Applications", new { @class= "float_left hght_18px" })
+    <div id="div_remove_message" class="lcl_hidden">@Html.Partial("~/Views/Shared/Message1.cshtml")</div>
+</div>
+
+<div id="div_table">
 
     <table id="tbl_applications" class="table table-bordered table-condensed table-striped">
         <thead>
@@ -38,13 +37,13 @@
                 <th>
                     @Html.DisplayNameFor(model => model.CreateDate)
                 </th>
-                <th></th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
+                <tr id="@item.Id">
                     <td>
                         @Html.DisplayFor(modelItem => item.AppId)
                     </td>
@@ -79,8 +78,9 @@
         </tbody>
 
     </table>
-    <div class="col-xs-2"></div>
-    <br style="clear:both;" />
+</div>
+<div class="col-xs-2"></div>
+<br style="clear:both;" />
 
 
 @section scripts{
@@ -135,16 +135,61 @@
                 },
                 callback: function (result) {
                     if (result) {
-                        console.log("process delete");
+                        DeleteApplication(data.appGuid);
                     }
                     else {
                         console.log("cancel delete");
+                        DisableInputs(false);
                     }
-                    DisableInputs(false);
                 }
             });
             return false;
         };
+
+        function DeleteApplication(appGuid) {
+            console.log("DeleteApplication:" + appGuid);
+            ShowMessage($('#div_remove_message'), "Processing Delete...", null, -1);
+
+            $.ajax({
+                type: 'POST',
+                url: '@(Url.Action("DeleteApplication", "Applications"))',
+                data: {
+                    'appGuid': appGuid
+                },
+                dataType: "json",
+                error: function () {
+                    console.log("DeleteApplication:error");
+                    DisableInputs(false);
+                },
+                success: function (data) {
+                    console.log("DeleteApplication:success:" + appGuid);
+                    var table1 = $('#tbl_applications').DataTable();
+                    var table1_row = table1.row("#" + appGuid + "");
+                    table1_row.remove().draw(false);
+                    ShowMessage($('#div_remove_message'), "Application was deleted.", false);
+                    DisableInputs(false);
+                },
+                complete: function () {
+                    console.log("DeleteApplication:complete");
+                    DisableInputs(false);
+                }
+            });
+
+
+            return false;
+        };
+
+
+
+        //// --------------------------------------------------------------------------------
+        //function RemoveUser(Id) {
+        //    console.log("RemoveUser:" + Id);
+        //    ShowMessage($('#div_remove_message'), "Processing...", null);
+        //    $('#hdn_key').val(Id);
+        //    $('#hdn_status').val("RemoveUser");
+        //    $('form#myform').submit();
+        //    return false;
+        //}
 
 
     </script>

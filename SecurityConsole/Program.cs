@@ -48,7 +48,7 @@ namespace SecurityConsole
                 AppSystem appSystem = new AppSystem();
                 appSystem.Name = sysName;
                 appSystem.Desc = sysDesc;
-                appSystem = SecAppManager.CreateApp(appSystem);
+                appSystem = SecAppManager.Create(appSystem);
                 WriteLine($"{appSystem.Name} was created.");
                 return appSystem;
             }
