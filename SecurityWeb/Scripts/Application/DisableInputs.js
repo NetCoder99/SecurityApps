@@ -14,5 +14,6 @@
         $(".small_inp_box").prop("disabled", false);
         $("input:password").prop("disabled", false);
         $("select").prop('disabled', false);
+        $(".xdisabled").prop("disabled", true);
     }
 }

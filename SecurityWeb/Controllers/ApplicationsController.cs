@@ -36,6 +36,7 @@ namespace SecurityWeb.Controllers
         [HttpPost]
         public ActionResult EditApplication(FormCollection model, string Create, string Delete, string Save)
         {
+            System.Threading.Thread.Sleep(1000);
 
             if (!ModelState.IsValid)
             {
@@ -59,21 +60,32 @@ namespace SecurityWeb.Controllers
                 else if (!String.IsNullOrEmpty(Create))
                 {
                     AppSystem newSystem = SecAppManager.Create(tmpSystem);
-
-                    jsonMessage = new { param1 = "Created", param2 = newSystem.Name };
-                    string jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(jsonMessage);
-
-                    HttpContext.Response.AddHeader("jsonMessage", jsonString);
-                    HttpContext.Response.StatusCode = (int)HttpStatusCode.OK;
-
-                    ViewAppSystem rtnModel = new ViewAppSystem(newSystem);
-                    return View(rtnModel);
+                    string appJson = newSystem.ToJSON();
+                    jsonMessage = new {
+                        param1 = "Created",
+                        newSystem.Id,
+                        newSystem.AppId,
+                        newSystem.Name,
+                        newSystem.Desc,
+                        CreateDate = newSystem.CreateDate.ToShortDateString() + " " + newSystem.CreateDate.ToShortTimeString(),
+                        UpdateDate = newSystem.UpdateDate.ToShortDateString() + " " + newSystem.UpdateDate.ToShortTimeString()
+                    };
+                    return Json(jsonMessage, JsonRequestBehavior.AllowGet);
                 }
                 else if (!String.IsNullOrEmpty(Save))
                 {
                     AppSystem updSystem = SecAppManager.Update(tmpSystem);
                     HttpContext.Response.StatusCode = (int)HttpStatusCode.OK;
-                    jsonMessage = new { param1 = "Update", param2 = updSystem.Name };
+                    jsonMessage = new
+                    {
+                        param1 = "Updated",
+                        updSystem.Id,
+                        updSystem.AppId,
+                        updSystem.Name,
+                        updSystem.Desc,
+                        CreateDate = updSystem.CreateDate.ToShortDateString() + " " + updSystem.CreateDate.ToShortTimeString(),
+                        UpdateDate = updSystem.UpdateDate.ToShortDateString() + " " + updSystem.UpdateDate.ToShortTimeString()
+                    };
                     return Json(jsonMessage, JsonRequestBehavior.AllowGet);
                 }
                 else
@@ -86,16 +98,14 @@ namespace SecurityWeb.Controllers
             }
             catch (Exception ex)
             {
+                dynamic jsonMessage;
+                HttpContext.Response.StatusCode = (int)HttpStatusCode.Forbidden;
                 string errMessage = ExceptionProcs.GetExceptionMessage(ex);
-                AppSystem tmpSystem = new AppBuilder().Build(model.ToJSON());
-                ViewAppSystem appSystem = new ViewAppSystem(tmpSystem);
-
-                dynamic jsonMessage = new { param1 = "Error", param2 = tmpSystem.Name };
-                string jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(jsonMessage);
-                HttpContext.Response.AddHeader("jsonMessage", jsonString);
-                HttpContext.Response.StatusCode = (int)HttpStatusCode.NotAcceptable;
-
-                return View(appSystem);
+                if (errMessage.Contains("duplicate"))
+                { jsonMessage = new { param1 = "Error", param2 = "Already Exists" }; }
+                else
+                { jsonMessage = new { param1 = "Error", param2 = errMessage }; }
+                return Json(jsonMessage, JsonRequestBehavior.AllowGet);
             }
 
 
@@ -128,7 +138,7 @@ namespace SecurityWeb.Controllers
             AppSystem appSystem = SecAppManager.GetAppByGuid(appGuid);
             SecAppManager.Delete(appSystem);
 
-            var jsonMessage = new { appGuid};
+            var jsonMessage = new { appGuid };
             HttpContext.Response.StatusCode = (int)HttpStatusCode.OK;
             return Json(jsonMessage, JsonRequestBehavior.AllowGet);
         }

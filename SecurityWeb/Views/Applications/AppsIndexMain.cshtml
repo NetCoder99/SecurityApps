@@ -16,8 +16,8 @@
 </div>
 
 <div style="clear:both;">
-    @Html.ActionLink("Create New", "EditApplication", "Applications", new { @class= "float_left hght_18px" })
-    <div id="div_remove_message" class="lcl_hidden">@Html.Partial("~/Views/Shared/Message1.cshtml")</div>
+    <div class="float_left hght_22px">@Html.ActionLink("Create New", "EditApplication", "Applications")</div>
+    <div id="div_remove_message" class="lcl_hidden hght_22px">@Html.Partial("~/Views/Shared/Message1.cshtml")</div>
 </div>
 
 <div id="div_table">
@@ -139,6 +139,7 @@
                     }
                     else {
                         console.log("cancel delete");
+                        ShowMessage($('#div_remove_message'), "Cancelled request...", null, 7000);
                         DisableInputs(false);
                     }
                 }

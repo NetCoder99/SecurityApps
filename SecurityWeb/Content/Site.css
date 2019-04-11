@@ -51,6 +51,10 @@ select
     height: 18px;
 }
 
+.hght_22px {
+    height: 22px;
+}
+
 .hght_1em {
     height: 1em;
 }
