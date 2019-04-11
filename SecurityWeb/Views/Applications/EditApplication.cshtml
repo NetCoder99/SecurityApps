@@ -140,6 +140,7 @@
             if (data.param1 == "Created") {
                 ShowMessage($("#div_message"), "Application created.", false);
                 $(".xdisabled").prop("disabled", true);
+                $("#hdn_Id").val(data.Id);
                 $("#AppId").val(data.AppId);
                 $("#CreateDate").val(data.CreateDate);
                 $("#UpdateDate").val(data.UpdateDate);

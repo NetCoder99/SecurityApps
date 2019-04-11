@@ -48,7 +48,8 @@ namespace SecurityWeb.Controllers
 
             try
             {
-                AppSystem tmpSystem = new AppBuilder().Build(model.ToJSON());
+                string tmpJson = model.ToJSON();
+                AppSystem tmpSystem = new AppBuilder().Build(tmpJson);
                 dynamic jsonMessage;
                 if (!String.IsNullOrEmpty(Delete))
                 {
