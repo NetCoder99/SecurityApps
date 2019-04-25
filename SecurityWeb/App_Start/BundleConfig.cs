@@ -22,7 +22,10 @@ namespace SecurityWeb
             ));
             bundles.Add(new ScriptBundle("~/bundles/application").Include(
                         "~/Scripts/Application/DisableInputs.js",
-                        "~/Scripts/Application/ShowMessage.js"
+                        "~/Scripts/Application/ShowMessage.js",
+                        "~/Scripts/Application/GetAppCounts.js",
+                        "~/Scripts/Application/ShowConfirmDialog.js",
+                        "~/Scripts/Application/DeleteApplication.js"
             ));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're

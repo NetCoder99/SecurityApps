@@ -1,0 +1,24 @@
+﻿@model SecurityWeb.Models.Error
+@using SecurityWeb.Extensions
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div style="margin:auto; padding-left:10em; padding-right:10em;">
+
+    <h3>Application error detected.</h3>
+    <span style="font-weight:bold;">Error Message:</span>
+    <span style="color:red">
+        @if (@Model.errMessage != null)
+        {@Model.errMessage}
+    </span>
+    <hr />
+    <h5>Stack Trace:</h5>
+    <span style="color:red">
+        @if (@Model.stackTrace != null)
+        {
+            @Html.DisplayWithBreaksFor(m => m.stackTrace)
+        }
+    </span>
+</div>

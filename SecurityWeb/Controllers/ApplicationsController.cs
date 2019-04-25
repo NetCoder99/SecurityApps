@@ -1,6 +1,5 @@
 ﻿using SecurityClass.Classes;
 using SecurityClass.Models;
-//using SecurityWeb.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,11 +10,34 @@ using System.Web.Mvc;
 using SecurityWeb.Common;
 using SecurityClass.Builders;
 using SecurityWeb.Models;
+using Newtonsoft.Json;
 
 namespace SecurityWeb.Controllers
 {
+
     public class ApplicationsController : Controller
     {
+        // --------------------------------------------------------------------------------------
+        protected override void OnException(ExceptionContext filterContext)
+        {
+            var isAjax = filterContext.HttpContext.Request.IsAjaxRequest();
+
+            HttpContext.Session["exception"] = filterContext.Exception;
+            filterContext.ExceptionHandled = true;
+
+            if (filterContext.HttpContext.Request.IsAjaxRequest())
+            {
+                dynamic errorMessage = JsonConvert.SerializeObject(filterContext.Exception);
+                return;
+            }
+            else
+            {
+                filterContext.Result = this.RedirectToAction("Index", "Error");
+            }
+
+            
+        }
+        
         // --------------------------------------------------------------------------------------
         [HttpGet]
         public ActionResult AppsIndexMain()
@@ -36,7 +58,7 @@ namespace SecurityWeb.Controllers
         [HttpPost]
         public ActionResult EditApplication(FormCollection model, string Create, string Delete, string Save)
         {
-            System.Threading.Thread.Sleep(1000);
+            System.Threading.Thread.Sleep(500);
 
             if (!ModelState.IsValid)
             {

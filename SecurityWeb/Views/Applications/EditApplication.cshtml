@@ -31,7 +31,7 @@
 
             <div style="clear:both;">
                 <div class="float_left hght_22px">@Html.ActionLink("Back to List", "AppsIndexMain")</div>
-                <div id="div_message" class="float_right lcl_hidden hght_22px">@Html.Partial("~/Views/Shared/Message1.cshtml")</div>
+                <div id="div_remove_message" class="lcl_hidden hght_22px">@Html.Partial("~/Views/Shared/Message1.cshtml")</div>
             </div>
 
             <div class="form-horizontal" style="clear:both;">
@@ -80,7 +80,9 @@
                             <input type="submit" name="Save" value="Save Changes" class="btn btn-default btn-primary" />
                         </div>
                         <div class="col-md-offset-2 float_left">
-                            <input type="submit" name="Delete" value="Delete Application" class="btn btn-primary" />
+                            <input type="submit" name="Delete" value="Delete Application" class="btn btn-primary"
+                                onclick="javascript:return ConfirmDelete('@Model.Id')"
+                            />
                         </div>
                     </div>
                     <div id="div_create_buttons">
@@ -117,9 +119,16 @@
             }
         });
 
+        function ConfirmDelete(appGuid) {
+            console.log("ConfirmDelete:" + appGuid);
+            DisableInputs(true);
+            GetAppCounts(appGuid);
+            return false;
+        };
+
         function OnBegin() {
             console.log("OnBegin:");
-            ShowMessage($("#div_message"), "Processing ...");
+            ShowMessage($("#div_remove_message"), "Processing ...");
             DisableInputs(true);
         }
 
@@ -129,7 +138,7 @@
             $(".xdisabled").prop("disabled", true);
 
             if (data.param1 == "Deleted") {
-                ShowMessage($("#div_message"), "Application deleted.", false);
+                ShowMessage($("#div_remove_message"), "Application deleted.", false);
                 $("#AppId").val("0");
                 $("#CreateDate").val("1/1/0001 12:00:00 AM");
                 $("#UpdateDate").val("1/1/0001 12:00:00 AM");
@@ -138,7 +147,7 @@
             }
 
             if (data.param1 == "Created") {
-                ShowMessage($("#div_message"), "Application created.", false);
+                ShowMessage($("#div_remove_message"), "Application created.", false);
                 $(".xdisabled").prop("disabled", true);
                 $("#hdn_Id").val(data.Id);
                 $("#AppId").val(data.AppId);
@@ -149,7 +158,7 @@
             }
 
             if (data.param1 == "Updated") {
-                ShowMessage($("#div_message"), "Application updated.", false);
+                ShowMessage($("#div_remove_message"), "Application updated.", false);
                 $("#AppId").prop("disabled", true);
                 $("#CreateDate").prop("disabled", true);
                 $("#UpdateDate").prop("disabled", true);
@@ -161,7 +170,7 @@
             console.log("OnFailure");
             DisableInputs(false);
             $("#AppId").prop("disabled", true);
-            ShowMessage($("#div_message"), xhr.responseJSON.param2, true, -1);
+            ShowMessage($("#div_remove_message"), xhr.responseJSON.param2, true, -1);
         }
 
 

@@ -18,5 +18,12 @@ namespace SecurityWeb.Common
         {
             return ex.EntityValidationErrors.ToList()[0].ValidationErrors.ToList()[0].ErrorMessage;
         }
+
+        public static string GetStackTrace(Exception ex)
+        {
+            if (ex.InnerException != null)
+            { return GetExceptionMessage(ex.InnerException); }
+            return ex.StackTrace;
+        }
     }
 }

@@ -142,10 +142,13 @@
     <Compile Include="Common\ExceptionProcs.cs" />
     <Compile Include="Common\GetModelErrors.cs" />
     <Compile Include="Controllers\ApplicationsController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Extensions\HtmlHelpers.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Error.cs" />
     <Compile Include="Models\ViewAppSystem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -322,7 +325,10 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\Application\DeleteApplication.js" />
     <Content Include="Scripts\Application\DisableInputs.js" />
+    <Content Include="Scripts\Application\GetAppCounts.js" />
+    <Content Include="Scripts\Application\ShowConfirmDialog.js" />
     <Content Include="Scripts\Application\ShowMessage.js" />
     <Content Include="Scripts\bootbox.js" />
     <Content Include="Scripts\bootbox.min.js" />
@@ -420,7 +426,9 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -435,9 +443,9 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Applications\AppsIndexMain.cshtml" />
-    <Content Include="Views\Applications\DeleteConfirm.cshtml" />
     <Content Include="Views\Shared\Message1.cshtml" />
     <Content Include="Views\Applications\EditApplication.cshtml" />
+    <Content Include="Views\Error\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
